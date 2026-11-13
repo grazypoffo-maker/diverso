@@ -11,3 +11,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## DevSpace integrations
 
 Keep the Paper Studio light/blue design. The user wants GitHub repositories imported automatically, project creation with source uploads, real file/commit activity and a standalone improvement prompt for an AI with no prior context. Focus GitHub first; Google was deferred by the user. Do not infer current editing activity or completion from repository metadata. Authentication in ChatGPT does not automatically authenticate visitors in this app.
+
+## Mobile navigation
+
+The user wants this iteration focused only on mobile usability. Preserve desktop appearance and existing functionality. Mobile must have no page/modal horizontal overflow, touch targets at least 44px, bottom primary navigation, project cards instead of sideways tables, and separate Activity/Files/Prompt navigation inside project sheets. Inputs must remain at least 16px to avoid iOS focus zoom, respect safe areas and the visible keyboard viewport, and preserve scroll position when closing a sheet. The user's 2026-11-13 recording shows clipped prompt fields and horizontal panning while editing.
