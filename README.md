@@ -1,16 +1,12 @@
-# Diverso
-Atlas interativo em português, publicado no GitHub Pages. HTML, CSS e JavaScript sem build.
+# Grazy Poffo Doceria
+Site estático em português no GitHub Pages. Cinco páginas: início, doces, coleções, história e encomendas. Sem build.
 
-## Páginas
-- `index.html`: apresentação com zoom controlado pela rolagem.
-- `atlas.html`: filtros por categoria e sorteio de ideias.
-- `achados.html`: favoritos locais, compatíveis com a versão anterior.
-- `sobre.html`: conceito e como usar.
+## Fontes de conteúdo
+- Cardápio: https://instadelivery.com.br/grazipoffodoceria
+- Logo e registros da família e de coleções: uploads do Canva da proprietária, utilizados com sua autorização.
+- Fotos do catálogo: cardápio público da doceria; foto do copo: upload da proprietária.
+- Telefone conferido no cardápio: +55 47 99941-1138.
 
-Navegação com links reais e View Transitions quando disponíveis. Respeita redução de movimento e funciona sem animações. Favoritos dependem do armazenamento local do navegador.
+Não há sincronização automática de estoque ou preços. O site encaminha ao cardápio oficial para os valores e a compra. As fotos sazonais não representam disponibilidade atual. Algumas fotos do Canva foram fornecidas pela integração apenas em miniatura.
 
-## Design
-Consulta de referência: https://uiverse.io/ui/button-hover-effects. Os estilos e o efeito de rolagem foram implementados originalmente para este site, sem copiar componentes.
-
-## Publicação
-GitHub Pages: branch `main`, pasta `/`.
+Efeito glass com desfoque e fallback opaco, redução de movimento, links reais e descrições acessíveis. Links antigos do Diverso redirecionam às novas páginas.
