@@ -11,7 +11,7 @@ if(dialog){dialog.querySelector('.dialog-close').addEventListener('click',closeD
 const hero=document.querySelector('.hero-scroll');if(hero){const reduce=matchMedia('(prefers-reduced-motion: reduce)');let queued=false;function update(){const r=hero.getBoundingClientRect();const p=reduce.matches?0:Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)));hero.style.setProperty('--progress',p.toFixed(3));queued=false}function schedule(){if(!queued){requestAnimationFrame(update);queued=true}}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);reduce.addEventListener('change',schedule);update()}
 const story=document.querySelector('.story-scroll');
 if(story){
- const reduced=matchMedia('(prefers-reduced-motion: reduce)');const steps=[...story.querySelectorAll('.story-step')];const stage=story.querySelector('.story-stage');let pending=false;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce), (max-height: 650px)');const steps=[...story.querySelectorAll('.story-step')];const stage=story.querySelector('.story-stage');let pending=false;
  const clamp=v=>Math.max(0,Math.min(1,v));
  function updateStory(){
   const rect=story.getBoundingClientRect();const top=parseFloat(getComputedStyle(stage).top)||0;const stageHeight=stage.getBoundingClientRect().height;const progress=clamp((top-rect.top)/Math.max(1,rect.height-stageHeight));story.style.setProperty('--story-progress',progress.toFixed(4));
@@ -24,3 +24,6 @@ if(story){
  function queueStory(){if(!pending){pending=true;requestAnimationFrame(updateStory)}}
  addEventListener('scroll',queueStory,{passive:true});addEventListener('resize',queueStory);reduced.addEventListener('change',queueStory);updateStory();
 }
+// Menu Mais: fechar ao clicar fora ou apertar Escape, sem bloquear o teclado.
+const moreMenu=document.querySelector('.more-nav');if(moreMenu){document.addEventListener('click',e=>{if(!moreMenu.contains(e.target))moreMenu.open=false});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&moreMenu.open){moreMenu.open=false;moreMenu.querySelector('summary').focus()}})}
+const navigation=document.querySelector('.nav-bar');if(navigation){const syncNavigationHeight=()=>{document.documentElement.style.setProperty('--story-top',`${Math.ceil(navigation.getBoundingClientRect().height)+(innerWidth<=760?24:48)}px`)};syncNavigationHeight();if('ResizeObserver'in window)new ResizeObserver(syncNavigationHeight).observe(navigation);addEventListener('resize',syncNavigationHeight)}

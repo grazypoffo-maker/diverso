@@ -13,3 +13,6 @@ Efeito glass com desfoque e fallback opaco, redução de movimento, links reais 
 
 ## Atualização da apresentação
 Página inicial canônica: `inicio.html`, com cópia em `index.html`. Links versionados para evitar a página anterior no cache. Apresentação de três momentos guiados pela rolagem, com opção de pular e versão estática para redução de movimento. Logo de 500px obtida do cardápio oficial. Miniaturas do Canva mantidas no tamanho fornecido, sem ampliação artificial.
+
+## Natal 2026
+Tema rosa/marrom/dourado com árvore, rena e gorro em SVG. O menu sazonal está em `natal.html`; o catálogo diário ficou no menu Mais. Produtos e descrições identificáveis dos menus Canva DAHautP2Piw e DAHauk-FEPc. Sem preços, datas ou campos de template não confirmados. MP4 local com controles, playsinline, preload=none, poster e legendas WebVTT logo depois do scroll. Sem autoplay nem dependência do Google Drive para reproduzir.
