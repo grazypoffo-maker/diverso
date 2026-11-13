@@ -1,7 +1,16 @@
 # Diverso
-Atlas interativo de ideias criativas em português. HTML, CSS e JavaScript, sem etapa de build.
+Atlas interativo em português, publicado no GitHub Pages. HTML, CSS e JavaScript sem build.
 
-Abra `index.html` no navegador. Os favoritos são salvos localmente no navegador. Inclui filtros por categoria e sorteio de ideias. A fonte externa é opcional; há fontes alternativas do sistema.
+## Páginas
+- `index.html`: apresentação com zoom controlado pela rolagem.
+- `atlas.html`: filtros por categoria e sorteio de ideias.
+- `achados.html`: favoritos locais, compatíveis com a versão anterior.
+- `sobre.html`: conceito e como usar.
 
-## GitHub Pages
-Publicação a partir da branch `main`, pasta `/`.
+Navegação com links reais e View Transitions quando disponíveis. Respeita redução de movimento e funciona sem animações. Favoritos dependem do armazenamento local do navegador.
+
+## Design
+Consulta de referência: https://uiverse.io/ui/button-hover-effects. Os estilos e o efeito de rolagem foram implementados originalmente para este site, sem copiar componentes.
+
+## Publicação
+GitHub Pages: branch `main`, pasta `/`.
