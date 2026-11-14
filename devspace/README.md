@@ -4,6 +4,7 @@ Painel React/Vite conectado ao GitHub, mantendo a direção visual Paper Studio 
 
 ## Funcionalidades
 
+- Login e cadastro por e-mail com Netlify Identity. O link “Esqueci minha senha” envia a recuperação por e-mail; a confirmação e a troca da senha retornam ao DevSpace. Os projetos continuam guardados localmente no navegador e separados por conta, sem sincronização entre dispositivos.
 - Sincroniza repositórios públicos de `grazypoffo-maker` ao abrir e a cada 2 minutos enquanto a aba está visível. Percorre todas as páginas (limite explícito: 2.000 repositórios). Erros não removem os projetos existentes.
 - Conecta token GitHub pessoal na memória da aba; não persiste token, não inclui token no código e não imprime credenciais. Tokens são enviados diretamente ao GitHub; o agente recebe o token no servidor apenas para validar a identidade via GitHub, sem repassá-lo à OpenAI.
 - Cria repositório público e envia arquivos/pasta em um commit, preservando o README inicial e sem force push. Requer token pessoal autorizado. Até 80 arquivos, 2 MB/arquivo e 10 MB total. Filtra dependências, builds, `.env` e chaves por nome. O usuário precisa revisar o conteúdo para remover segredos embutidos no código.
