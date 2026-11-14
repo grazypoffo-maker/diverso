@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, Code, EnvelopeSimple, LockKey, Sparkle } from '@phosphor-icons/react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, ArrowRight, Code, EnvelopeSimple, LockKey, Sparkle, GoogleLogo } from '@phosphor-icons/react';
 import {
+  getIdentitySettings,
   getIdentityUser,
+  googleLoginIdentity,
   loginIdentity,
   requestIdentityPasswordRecovery,
   signupIdentity,
   updateIdentityUser,
 } from './identity';
+import { PwaInstall } from './PwaInstall';
 
 export function AuthScreen({ onAuthenticated, initialError = '', initialMode = 'login' }) {
   const [mode, setMode] = useState(initialMode);
@@ -16,6 +19,13 @@ export function AuthScreen({ onAuthenticated, initialError = '', initialMode = '
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(initialError);
   const [notice, setNotice] = useState(initialMode === 'reset' ? 'Crie uma nova senha para sua conta.' : '');
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    getIdentitySettings().then(settings => { if (active) setGoogleEnabled(Boolean(settings.providers?.google)); }).catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   function switchMode(next) {
     setMode(next);
@@ -60,6 +70,14 @@ export function AuthScreen({ onAuthenticated, initialError = '', initialMode = '
     }
   }
 
+  function enterWithGoogle() {
+    if (!googleEnabled) {
+      setError('O acesso com Google ainda precisa ser ativado em Netlify → Identity → Registration → External providers.');
+      return;
+    }
+    googleLoginIdentity();
+  }
+
   const title = mode === 'forgot' ? 'Recuperar senha' : mode === 'reset' ? 'Crie uma nova senha' : mode === 'signup' ? 'Crie sua conta' : 'Entre no DevSpace';
   const description = mode === 'forgot'
     ? 'Enviaremos um link de recuperação para o e-mail da sua conta.'
@@ -73,6 +91,7 @@ export function AuthScreen({ onAuthenticated, initialError = '', initialMode = '
     <section className="auth-card" aria-labelledby="auth-title">
       <a className="auth-brand" href="/" aria-label="DevSpace"><span className="auth-mark"><Code size={25}/></span><span>DevSpace<span className="brand-slash"> /</span></span></a>
       <div className="auth-heading"><span className="auth-kicker"><Sparkle size={16}/> SEU ESPAÇO DE CRIAÇÃO</span><h1 id="auth-title">{title}</h1><p>{description}</p></div>
+      {mode === 'login' && <><button className="google-login" type="button" onClick={enterWithGoogle}><GoogleLogo size={20} weight="bold"/> Entrar com Google</button><div className="auth-divider"><span>ou entre com e-mail</span></div></>}
       <form className="auth-form" onSubmit={submit}>
         {mode !== 'reset' && <label>E-mail<div className="auth-input-wrap"><EnvelopeSimple size={20}/><input autoComplete="email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="voce@exemplo.com"/></div></label>}
         {mode !== 'forgot' && <label>{mode === 'reset' ? 'Nova senha' : 'Senha'}<div className="auth-input-wrap"><LockKey size={20}/><input autoComplete={mode === 'signup' || mode === 'reset' ? 'new-password' : 'current-password'} type="password" minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} placeholder="Pelo menos 8 caracteres"/></div></label>}
@@ -85,6 +104,7 @@ export function AuthScreen({ onAuthenticated, initialError = '', initialMode = '
       {mode !== 'reset' && mode !== 'forgot' && <p className="auth-switch">{mode === 'signup' ? 'Já tem uma conta?' : 'Ainda não tem uma conta?'} <button className="auth-text-button" onClick={()=>switchMode(mode==='signup'?'login':'signup')}>{mode==='signup'?'Entrar':'Criar conta'}</button></p>}
       {(mode === 'forgot' || mode === 'reset') && <button className="auth-back" onClick={()=>switchMode('login')}><ArrowLeft size={18}/> Voltar para entrar</button>}
       <p className="auth-footnote">Seus projetos ficam salvos neste navegador e nesta conta.</p>
+      <PwaInstall />
     </section>
   </main>;
 }
