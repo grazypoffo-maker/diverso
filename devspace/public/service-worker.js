@@ -1,5 +1,5 @@
 const CACHE = 'devspace-shell-v1';
-const SHELL = ['/', '/manifest.webmanifest', '/icons/devspace-192.png', '/icons/devspace-512.png'];
+const SHELL = ['/', '/manifest.webmanifest', '/icons/devspace.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
 });
