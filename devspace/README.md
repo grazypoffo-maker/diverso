@@ -13,6 +13,7 @@ Painel React/Vite conectado ao GitHub, mantendo a direção visual Paper Studio 
 - Projetos com arquivos entram em andamento; vazios entram em planejamento. Status e tarefas manuais são preservados na sincronização. Conclusão é manual.
 - Dados do painel ficam em localStorage do dispositivo; exporta backup JSON. Não há sincronização entre dispositivos nem banco de dados nesta versão.
 - Agente Hugging Face com respostas em streaming, contexto dos projetos/tarefas e histórico em memória. Não lê arquivos sozinho, não executa código e não escreve no GitHub. Conta autorizada pelo ID imutável GitHub, restrição de origem, limites de tamanho e rate limit Netlify.
+- Conversa por voz: o navegador grava o microfone, o Hugging Face transcreve e a resposta pode ser narrada pelo ElevenLabs. O app pede permissão do microfone no toque do usuário e envia gravações curtas ao provedor para transcrição.
 - PWA instalável no iPhone pela opção Safari → Compartilhar → Adicionar à Tela de Início, com ícone DevSpace e shell básico disponível offline. No Android, Chrome pode oferecer instalação. Os dados seguem locais por dispositivo.
 - Login com Google preparado pelo Netlify Identity; o botão só ativa quando Google estiver habilitado em Identity → Registration → External providers.
 
@@ -36,7 +37,16 @@ O site existente foi publicado manualmente; para publicar também a Function, vi
 
 ## Configuração do agente
 
-Configure `HUGGINGFACE_API_KEY` como variável secreta do Netlify e `HUGGINGFACE_MODEL` com o identificador do modelo disponível no Hugging Face Inference Providers. A chamada é feita no servidor pelo endpoint compatível com OpenAI; a chave não vai para o navegador. O agente informa quando a configuração estiver ausente.
+Configure estes valores em variáveis secretas do Netlify, nunca no código:
+
+- `HUGGINGFACE_API_KEY`: token novo do Hugging Face com permissão **Inference Providers**.
+- `HUGGINGFACE_MODEL`: identificador do modelo de chat disponível para sua conta.
+- `HUGGINGFACE_STT_MODEL` (opcional): modelo de transcrição; padrão `openai/whisper-large-v3-turbo`.
+- `ELEVENLABS_API_KEY`: chave nova com acesso **Text to Speech**.
+- `ELEVENLABS_VOICE_ID`: ID de uma voz habilitada na sua conta.
+- `ELEVENLABS_MODEL` (opcional): padrão `eleven_multilingual_v2`.
+
+Chat e transcrição usam Hugging Face no servidor; narração usa o endpoint de streaming de Text to Speech do ElevenLabs. As chaves não chegam ao navegador. O agente informa quando alguma configuração estiver ausente.
 
 `DEVSPACE_OWNER_ID` pode substituir `277391915`, proprietário atual. O agente verifica esse ID consultando `/user` no GitHub a cada chamada. Reimplante após alterar variáveis.
 
