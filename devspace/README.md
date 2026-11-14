@@ -12,7 +12,9 @@ Painel React/Vite conectado ao GitHub, mantendo a direção visual Paper Studio 
 - Gera prompt autossuficiente, editável e copiável com contexto, objetivo e roteiro de melhorias. Não usa IA nem exige API para essa função; não afirma ter analisado o conteúdo completo do código.
 - Projetos com arquivos entram em andamento; vazios entram em planejamento. Status e tarefas manuais são preservados na sincronização. Conclusão é manual.
 - Dados do painel ficam em localStorage do dispositivo; exporta backup JSON. Não há sincronização entre dispositivos nem banco de dados nesta versão.
-- Agente OpenAI com respostas em streaming, contexto dos projetos/tarefas e histórico em memória. Não lê arquivos sozinho, não executa código e não escreve no GitHub. Conta autorizada pelo ID imutável GitHub, restrição de origem, limites de tamanho e rate limit Netlify.
+- Agente Hugging Face com respostas em streaming, contexto dos projetos/tarefas e histórico em memória. Não lê arquivos sozinho, não executa código e não escreve no GitHub. Conta autorizada pelo ID imutável GitHub, restrição de origem, limites de tamanho e rate limit Netlify.
+- PWA instalável no iPhone pela opção Safari → Compartilhar → Adicionar à Tela de Início, com ícone DevSpace e shell básico disponível offline. No Android, Chrome pode oferecer instalação. Os dados seguem locais por dispositivo.
+- Login com Google preparado pelo Netlify Identity; o botão só ativa quando Google estiver habilitado em Identity → Registration → External providers.
 
 ## Executar e validar
 
@@ -34,11 +36,15 @@ O site existente foi publicado manualmente; para publicar também a Function, vi
 
 ## Configuração do agente
 
-O acesso à OpenAI exige `OPENAI_API_KEY` via Netlify AI Gateway (se o plano e a equipe tiverem o recurso ativado) ou chave própria em variável secreta com escopo Functions. `OPENAI_BASE_URL` é consumida pelo SDK. `OPENAI_MODEL` pode selecionar um modelo disponível; quando omitida, a função consulta a lista do provedor e procura um modelo GPT menor. O agente devolve erro claro quando não está configurado.
+Configure `HUGGINGFACE_API_KEY` como variável secreta do Netlify e `HUGGINGFACE_MODEL` com o identificador do modelo disponível no Hugging Face Inference Providers. A chamada é feita no servidor pelo endpoint compatível com OpenAI; a chave não vai para o navegador. O agente informa quando a configuração estiver ausente.
 
 `DEVSPACE_OWNER_ID` pode substituir `277391915`, proprietário atual. O agente verifica esse ID consultando `/user` no GitHub a cada chamada. Reimplante após alterar variáveis.
 
 Não coloque credenciais em `netlify.toml`, código frontend, arquivos ou mensagens no chat. A assinatura ChatGPT não é uma chave API nem fornece créditos API ao aplicativo.
+
+## Instalação e autenticação
+
+Para instalar no iPhone, abra o endereço publicado no Safari, toque em Compartilhar e selecione Adicionar à Tela de Início. A Google Play Store não distribui apps para iPhone; a versão PWA não exige publicação em loja. Login com Google requer que o provedor seja configurado no painel Netlify. O plano Free atual do projeto usa o e-mail padrão de recuperação; modelos visuais de e-mail personalizados pelo Netlify Identity dependem de plano compatível ou de uma configuração de autenticação/e-mail externa.
 
 ## Referências do projeto
 
